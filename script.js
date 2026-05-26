@@ -3,6 +3,8 @@ let selectedCard = null;
 let revealed = new Set();
 let solved = new Set();
 let numberOfScholars = 0;
+let dataPath = "data/";
+//let dataPath = "/_internal/SchoolMemory/EIS253/";
 
 
 const board = document.getElementById("board");
@@ -10,19 +12,49 @@ const nameButtons = document.getElementById("nameButtons");
 const status = document.getElementById("status");
 
 async function init() {
-  const res = await fetch("data/scholars.json");
+  const res = await fetch(dataPath + "scholars.json");
   scholars = await res.json();
 
   // nur 9 nehmen
-  scholars = shuffle([...scholars]).slice(0, 9);
+  scholars = shuffle([...scholars]);
   numberOfScholars = scholars.length;
 
   renderBoard();
   renderButtons();
 }
 
+function getGridSize(n) {
+  return Math.ceil(Math.sqrt(n));
+}
+
+function getGridCount(n) {
+  const size = getGridSize(n);
+  return size * size;
+}
+
+function prepareGridData(scholars) {
+  const size = getGridSize(scholars.length);
+  const gridCount = size * size;
+
+  const shuffled = shuffle([...scholars]);
+
+  // auffüllen falls nötig (mit null-Karten)
+  //while (shuffled.length < gridCount) {
+   // shuffled.push(null);
+ // }
+
+  return { data: shuffled, size };
+}
+
 function renderBoard() {
   board.innerHTML = "";
+
+	const { data, size } = prepareGridData(scholars);
+	
+	const cardWidth = window.innerWidth <= 800 ? 80 : 120;
+	board.style.gridTemplateColumns = `repeat(${size}, ${cardWidth}px)`;
+	board.style.rowTemplateColumns = `repeat(${size}, ${cardWidth}px)`;
+
 
   scholars.forEach((person, index) => {
     const card = document.createElement("div");
@@ -30,7 +62,13 @@ function renderBoard() {
     card.dataset.index = index;
 
     const img = document.createElement("img");
-    img.src = `data/${person.lastname}, ${person.firstname}.png`;
+    
+	if(person.picture){
+		img.src = `${dataPath}${person.picture}`;
+	}else{
+		img.src = `${dataPath}${person.lastname}, ${person.firstname}.png`;
+	}
+	
 
     card.appendChild(img);
 
@@ -46,7 +84,7 @@ function renderButtons() {
   shuffle([...scholars]).forEach(person => {
     const btn = document.createElement("button");
     btn.className = "name-btn";
-    btn.textContent = `${person.firstname} ${person.lastname}`;
+    btn.textContent = `${person.lastname}, ${person.firstname}`;
 
     btn.addEventListener("click", () => guess(person, btn));
 
@@ -58,12 +96,14 @@ function selectCard(index) {
   if (solved.has(index)) return;
 
   // wenn bereits eine Karte aktiv ist und falsch geraten wurde → reset erlaubt
-  selectedCard = index;
+  if(!selectedCard){
+	  selectedCard = index;
 
-  const card = board.children[index];
-  card.classList.add("revealed");
+	  const card = board.children[index];
+	  card.classList.add("revealed");
 
-  revealed.add(index);
+	  revealed.add(index);
+  }
 }
 
 function guess(person, btn) {
