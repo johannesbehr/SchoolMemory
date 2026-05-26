@@ -34,5 +34,41 @@
   {
     "firstname": "Laura",
     "lastname": "Fischer"
+  },
+  {
+    "firstname": "Elias",
+    "lastname":  "Weber"
+  },
+  {
+    "firstname": "Jana",
+    "lastname":  "Müller"
+  },
+  {
+    "firstname": "Kevin",
+    "lastname":  "Yildirim"
+  },
+  {
+    "firstname": "Lina",
+    "lastname":  "Park"
+  },
+  {
+    "firstname": "Jonas",
+    "lastname":  "Krüger"
+  },
+  {
+    "firstname": "Alina",
+    "lastname":  "Braun"
+  },
+  {
+    "firstname": "Tim",
+    "lastname":  "Schuster"
+  },
+  {
+    "firstname": "Mia",
+    "lastname":  "Lehmann"
+  },
+  {
+    "firstname": "Aisha",
+    "lastname":  "Diallo"
   }
 ]
