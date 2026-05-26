@@ -82,16 +82,16 @@ body {
 /* Mobilgeräte */
 @media (max-width: 800px) {
 
-  .game {
-    flex-direction: column;
+ .game {
+    flex-direction: column; /* <-- WICHTIG */
     align-items: center;
     padding: 10px;
-    gap: 10px;
+    gap: 15px;
   }
 
   .sidebar {
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
   }
 
   .name-buttons {
@@ -106,7 +106,6 @@ body {
   }
 
   .board {
-    grid-template-columns: repeat(auto-fit, 80px);
     justify-content: center;
     gap: 8px;
   }

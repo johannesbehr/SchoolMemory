@@ -12,6 +12,10 @@ const nameButtons = document.getElementById("nameButtons");
 const status = document.getElementById("status");
 
 async function init() {
+	
+
+	
+	
   const res = await fetch(dataPath + "scholars.json");
   scholars = await res.json();
 
@@ -49,11 +53,10 @@ function prepareGridData(scholars) {
 function renderBoard() {
   board.innerHTML = "";
 
-	const { data, size } = prepareGridData(scholars);
-	
-	const cardWidth = window.innerWidth <= 800 ? 80 : 120;
-	board.style.gridTemplateColumns = `repeat(${size}, ${cardWidth}px)`;
-	board.style.rowTemplateColumns = `repeat(${size}, ${cardWidth}px)`;
+const { data, size } = prepareGridData(scholars);
+
+board.style.gridTemplateColumns =
+  `repeat(${size}, minmax(60px, 1fr))`;
 
 
   scholars.forEach((person, index) => {
@@ -145,5 +148,31 @@ function checkWin() {
 function shuffle(arr) {
   return arr.sort(() => Math.random() - 0.5);
 }
+
+// Source - https://stackoverflow.com/a/10627148
+// Posted by Zuul, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-05-26, License - CC BY-SA 3.0
+
+function toggleFullScreen() {
+  if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
+   (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+    if (document.documentElement.requestFullScreen) {  
+      document.documentElement.requestFullScreen();  
+    } else if (document.documentElement.mozRequestFullScreen) {  
+      document.documentElement.mozRequestFullScreen();  
+    } else if (document.documentElement.webkitRequestFullScreen) {  
+      document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
+    }  
+  } else {  
+    if (document.cancelFullScreen) {  
+      document.cancelFullScreen();  
+    } else if (document.mozCancelFullScreen) {  
+      document.mozCancelFullScreen();  
+    } else if (document.webkitCancelFullScreen) {  
+      document.webkitCancelFullScreen();  
+    }  
+  }  
+}
+
 
 init();
