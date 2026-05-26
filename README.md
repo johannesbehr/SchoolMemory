@@ -1,10 +1,9 @@
-Alles klar — hier ist **eine einzige, durchgehende README.md-Datei ohne zusätzliche Codeblöcke oder Teilstücke**:
-
-```md
 # 🧠 Schüler-Memory (Namenslernspiel)
 
 Ein interaktives Memory-Spiel, mit dem Lehrkräfte die Namen ihrer Schüler:innen spielerisch trainieren können.  
 Die Spielenden ordnen zufällig verdeckten Schülerbildern die passenden Namen zu.
+
+[Hier kann man es live testen:](https://johannesbehr.github.io/SchoolMemory/).
 
 ---
 
