@@ -4,8 +4,6 @@ let revealed = new Set();
 let solved = new Set();
 let numberOfScholars = 0;
 let dataPath = "data/";
-//let dataPath = "/_internal/SchoolMemory/EIS253/";
-
 
 const board = document.getElementById("board");
 const nameButtons = document.getElementById("nameButtons");
@@ -15,12 +13,13 @@ const overlayTitle = document.getElementById("overlayTitle");
 const overlayText = document.getElementById("overlayText");
 const restartBtn = document.getElementById("restartBtn");
 
+const sound_ding = new Audio("sounds/ding.mp3");
+const sound_buzzer = new Audio("sounds/buzzer.mp3");
+const sound_applause = new Audio("sounds/applause.mp3");
 
+let fehler = 0;
 
 async function init() {
-	
-
-	
 	
   const res = await fetch(dataPath + "scholars.json");
   scholars = await res.json();
@@ -28,6 +27,8 @@ async function init() {
   // nur 9 nehmen
   scholars = shuffle([...scholars]);
   numberOfScholars = scholars.length;
+  
+  fehler = 0;
 
   renderBoard();
   renderButtons();
@@ -133,14 +134,18 @@ function guess(person, btn) {
 
     selectedCard = null;
 
-    checkWin();
+    if(!checkWin()){
+		sound_ding.currentTime = 0;
+		sound_ding.play();
+	};
   } else {
     // falsch → Karte wieder verdecken
     const card = board.children[selectedCard];
     card.classList.remove("revealed");
-
+		sound_buzzer.currentTime = 0;
+		sound_buzzer.play();
     status.textContent = "Falsch!";
-
+	fehler ++;
     selectedCard = null;
   }
 }
@@ -148,13 +153,17 @@ function guess(person, btn) {
 function checkWin() {
   if (solved.size === numberOfScholars) {
     status.textContent = "🎉 Spiel beendet!";
-
+	
+	sound_applause.currentTime = 0;
+	sound_applause.play();
+	
 	showOverlay(
 	  "🎉 Spiel beendet!",
-	  "Alle Schüler wurden richtig erkannt."
+	  "Alle Schüler wurden richtig erkannt.<br>" + "Fehler: " + fehler
 	);
-	
+	return true;
   }
+  return false;
 }
 
 function shuffle(arr) {
@@ -187,8 +196,8 @@ function toggleFullScreen() {
 }
 
 function showOverlay(title, text) {
-  overlayTitle.textContent = title;
-  overlayText.textContent = text;
+  overlayTitle.innerHTML = title;
+  overlayText.innerHTML = text;
   overlay.classList.remove("hidden");
 }
 

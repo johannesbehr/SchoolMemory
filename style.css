@@ -124,6 +124,23 @@ body {
   background: #1976D2;
 }
 
+.fullscreen-btn {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  z-index: 2000;
+  opacity: 0.8;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.fullscreen-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
 /* Mobilgeräte */
 @media (max-width: 800px) {
 
