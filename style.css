@@ -79,6 +79,51 @@ body {
   font-weight: bold;
 }
 
+/* Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* zunächst versteckt */
+.hidden {
+  display: none;
+}
+
+.modal {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  min-width: 260px;
+  max-width: 90%;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+.modal button {
+  margin-top: 15px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  background: #2196F3;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.modal button:hover {
+  background: #1976D2;
+}
+
 /* Mobilgeräte */
 @media (max-width: 800px) {
 

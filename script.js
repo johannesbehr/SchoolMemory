@@ -10,6 +10,12 @@ let dataPath = "data/";
 const board = document.getElementById("board");
 const nameButtons = document.getElementById("nameButtons");
 const status = document.getElementById("status");
+const overlay = document.getElementById("overlay");
+const overlayTitle = document.getElementById("overlayTitle");
+const overlayText = document.getElementById("overlayText");
+const restartBtn = document.getElementById("restartBtn");
+
+
 
 async function init() {
 	
@@ -142,6 +148,12 @@ function guess(person, btn) {
 function checkWin() {
   if (solved.size === numberOfScholars) {
     status.textContent = "🎉 Spiel beendet!";
+
+	showOverlay(
+	  "🎉 Spiel beendet!",
+	  "Alle Schüler wurden richtig erkannt."
+	);
+	
   }
 }
 
@@ -173,6 +185,20 @@ function toggleFullScreen() {
     }  
   }  
 }
+
+function showOverlay(title, text) {
+  overlayTitle.textContent = title;
+  overlayText.textContent = text;
+  overlay.classList.remove("hidden");
+}
+
+function hideOverlay() {
+  overlay.classList.add("hidden");
+}
+
+restartBtn.addEventListener("click", () => {
+  location.reload();
+});
 
 
 init();
